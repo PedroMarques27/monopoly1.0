@@ -26,6 +26,7 @@ const spiralNumbers = [
 const Board = ({ players_setup, rows, columns, whiteCells }) => {
   const [players, setPlayers] = useState(players_setup);
   const [currentTurn, setCurrentTurn] = useState(0);
+  const [isBonus, setIsBonus] = useState(false)
   const [hopCount, setHopCount] = useState(0);
   const [isHopping, setIsHopping] = useState(false);
   const [currentCard, setCurrentCard] = useState(null);
@@ -57,13 +58,15 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
     const isWhiteCell = whiteCells.some(
       ([whiteRow, whiteCol]) => whiteRow === rowIndex && whiteCol === colIndex
     );
-
-    if (isWhiteCell) {
+    if (isWhiteCell || isBonus ) {
       setCurrentCard(null); // No card on white cells
       setCardsDisabled(true); // Disable cards on white cells
       setCanRoll(true);
+      setIsBonus(true);
+      handleAnswer(true);
       return;
     }
+   
 
     const availableCards = isCornerCell
       ? decks.filter(deck => deck.type === "Curiosidade")
@@ -77,6 +80,12 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
       setIsQuestionAnswered(false);
       setCardsDisabled(false); // Enable cards on non-white cells
       setCanRoll(randomCard.type === "Curiosidade");
+      if (isCornerCell){
+        let nextTurn = currentTurn + 1;
+        if (currentTurn === players.length - 1) nextTurn = 0;
+        setCurrentTurn(nextTurn);
+        return;
+      } 
     } else {
       setCurrentCard(null);
       setCardsDisabled(true); // Disable cards if no card is available
@@ -109,7 +118,6 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
 
   const hop = async (number) => {
     if (isHopping) return;
-    
     setHopCount((prevCount) => prevCount + 1);
     setCardRevealed(false);  // Reset card revealed state
     setAnswerRevealed(false);  // Reset answer revealed state
@@ -136,7 +144,6 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
         setPlayers([...newPlayers]);
         await new Promise((resolve) => setTimeout(resolve, 800));
       }
-  
       handleLanding(row, col);
     };
   
@@ -149,12 +156,16 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
   const handleAnswer = (isCorrect) => {
     setIsQuestionAnswered(true);
     setCanRoll(true); 
-    if (isCorrect) {
+    console.log(currentTurn)
+    if (isCorrect && !isBonus) {
       setCurrentTurn(currentTurn);
+      setIsBonus(true);
     } else {
       let nextTurn = currentTurn + 1;
       if (currentTurn === players.length - 1) nextTurn = 0;
       setCurrentTurn(nextTurn);
+      console.log(currentTurn)
+      setIsBonus(false);
     }
   };
 
