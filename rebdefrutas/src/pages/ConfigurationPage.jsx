@@ -17,7 +17,7 @@ const ConfigurationPage = () => {
       alert("Please add at least one player before starting the game.");
     }
   };
-
+ 
   return (
     <div>
       <h2>Configuration Page</h2>

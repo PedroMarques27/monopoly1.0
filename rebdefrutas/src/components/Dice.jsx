@@ -20,7 +20,7 @@ import static6 from '../assets/dice/dice-static-6.gif';
 const diceFaces = [dice1, dice2, dice3, dice4, dice5, dice6];
 const staticFaces = [static1, static2, static3, static4, static5, static6];
 
-const Dice = ({ onRoll, canRoll }) => {
+const Dice = ({ onRoll, canRoll, setCardRevealed }) => {
   const [diceFace, setDiceFace] = useState(diceGame);
   const [rolling, setRolling] = useState(false);
 

@@ -23,9 +23,7 @@ const fruitImages = {
 const spiralNumbers = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 45, 46, 47, 48, 49
 ];
-
-const Board = ({ players_setup }) => {
-  console.log(players_setup)
+const Board = ({ players_setup, rows, columns, whiteCells }) => {
   const [players, setPlayers] = useState(players_setup);
   const [currentTurn, setCurrentTurn] = useState(0);
   const [hopCount, setHopCount] = useState(0);
@@ -35,6 +33,7 @@ const Board = ({ players_setup }) => {
   const [cardRevealed, setCardRevealed] = useState(false);
   const [isQuestionAnswered, setIsQuestionAnswered] = useState(false);
   const [canRoll, setCanRoll] = useState(true);
+  const [cardsDisabled, setCardsDisabled] = useState(true); // New state variable to control card disabled status
 
   useEffect(() => {
     if (!currentCard) {
@@ -42,25 +41,56 @@ const Board = ({ players_setup }) => {
     }
   }, [currentCard]);
 
-  const rows = 11;
-  const columns = 15;
-  const borderColors = ["#e9e96a", '#e38d27'];
-
   const board = Array.from({ length: rows }, (_, rowIndex) =>
     Array.from({ length: columns }, (_, colIndex) => {
       const playerAtCell = players.find(player => player.position[0] === rowIndex && player.position[1] === colIndex);
       return playerAtCell ? playerAtCell.avatar : null;
     })
-  );
+  )
+
+  const handleLanding = (rowIndex, colIndex) => {
+    const isCornerCell =
+    (rowIndex === 0 && colIndex === 0) ||
+    (rowIndex === 0 && colIndex === columns - 1) ||
+    (rowIndex === rows - 1 && colIndex === 0) ||
+    (rowIndex === rows - 1 && colIndex === columns - 1);
+    const isWhiteCell = whiteCells.some(
+      ([whiteRow, whiteCol]) => whiteRow === rowIndex && whiteCol === colIndex
+    );
+
+    if (isWhiteCell) {
+      setCurrentCard(null); // No card on white cells
+      setCardsDisabled(true); // Disable cards on white cells
+      return;
+    }
+
+    const availableCards = isCornerCell
+      ? decks.filter(deck => deck.type === "Curiosidade")
+      : decks.filter(deck => deck.type === "Questão");
+
+    if (availableCards.length > 0) {
+      const randomCard = availableCards[Math.floor(Math.random() * availableCards.length)];
+      setCurrentCard(randomCard);
+      setAnswerRevealed(false);
+      setCardRevealed(false);
+      setIsQuestionAnswered(false);
+      setCardsDisabled(false); // Enable cards on non-white cells
+    } else {
+      setCurrentCard(null);
+      setCardsDisabled(true); // Disable cards if no card is available
+    }
+  };
 
   const handleCardClick = () => {
-    if (currentCard) {
+    if (currentCard && !cardsDisabled) {  // Only allow clicking if cards are enabled
       setCardRevealed(prev => !prev);
+     
       if (cardRevealed) {
         setAnswerRevealed(false);
       }
     }
   };
+
 
   const getIndex = (rowIndex, colIndex) => {
     if (rowIndex === 0) {
@@ -75,7 +105,11 @@ const Board = ({ players_setup }) => {
 
   const hop = async (number) => {
     if (isHopping) return;
-    setCardRevealed(false);
+    
+    setHopCount((prevCount) => prevCount + 1);
+    setCardRevealed(false);  // Reset card revealed state
+    setAnswerRevealed(false);  // Reset answer revealed state
+    setIsQuestionAnswered(false);  // Reset question answered state
     setIsHopping(true);
     const newPlayers = [...players];
     const currentPlayer = newPlayers[currentTurn];
@@ -103,25 +137,11 @@ const Board = ({ players_setup }) => {
     };
   
     await hopThroughPositions();
-    setHopCount((prevCount) => prevCount + 1);
     setIsHopping(false);
     setCanRoll(true);
   };
 
-  const handleLanding = (rowIndex, colIndex) => {
-    const availableCards = decks.filter(deck =>
-      deck.type === "Curiosidade" || deck.type === "Questão"
-    );
 
-    if (availableCards.length > 0) {
-      const randomCard = availableCards[Math.floor(Math.random() * availableCards.length)];
-      console.log(randomCard);
-      setCurrentCard(randomCard);
-      setAnswerRevealed(false);
-      setCardRevealed(false);
-      setIsQuestionAnswered(false);
-    }
-  };
 
   const handleAnswer = (isCorrect) => {
     setIsQuestionAnswered(true);
@@ -141,27 +161,31 @@ const Board = ({ players_setup }) => {
           row.map((cell, colIndex) => {
             const isBorderCell =
               rowIndex === 0 || rowIndex === rows - 1 || colIndex === 0 || colIndex === columns - 1;
-
+            const isWhiteCell = whiteCells.some(
+                ([whiteRow, whiteCol]) => whiteRow === rowIndex && whiteCol === colIndex
+              );
             let backgroundColor;
-            if (isBorderCell) {
+            if (isWhiteCell) {
+              backgroundColor = '#e38d27';
+            } else if (isBorderCell) {
               if ((rowIndex === 0 && colIndex === 0) ||
                   (rowIndex === 0 && colIndex === columns - 1) ||
                   (rowIndex === rows - 1 && colIndex === 0) ||
                   (rowIndex === rows - 1 && colIndex === columns - 1)) {
                 backgroundColor = '#a8de6e';
               } else {
-                backgroundColor = borderColors[(rowIndex + colIndex) % borderColors.length];
+                backgroundColor = "#e9e96a";
               }
             }
 
-            return isBorderCell ? (
+            return isBorderCell || isWhiteCell ? (
               <div
                 key={`${rowIndex}-${colIndex}`}
                 className={`cell`}
                 style={{ backgroundColor: backgroundColor }}
               >
-                 <span className="cell-number">{getIndex(rowIndex, colIndex)-1} </span> {/* Display cell number */}
-                {cell ? <> <img src={fruitImages[cell]} alt={cell} className="player-avatar" /></> : null}
+                <span className="cell-number">{getIndex(rowIndex, colIndex) - 1} </span>
+                {cell ? <img src={fruitImages[cell]} alt={cell} className="player-avatar" /> : null}
               </div>
             ) : (
               <div
@@ -176,23 +200,26 @@ const Board = ({ players_setup }) => {
       </div>
 
       {/* Controls Section */}
-{/* Controls Section */}
       <div className="controls-container">
         <div className="controls">
           <Card 
             card={currentCard} 
             onClick={handleCardClick} 
             handleAnswer={handleAnswer} 
+            resetCardState={hopCount} 
             disabled={isHopping || currentCard?.type === "Questão"} 
-            style={(isHopping || currentCard?.type === "Questão") ? { opacity: 0.5, pointerEvents: 'none' } : {}}
+            style={(cardsDisabled || isHopping || currentCard?.type === "Questão") ? { opacity: 0.5, pointerEvents: 'none' } : {}}
+  
           />
-          <Dice canRoll={canRoll} onRoll={hop} />
+          <Dice canRoll={canRoll} onRoll={hop}/>
           <Card 
             card={currentCard} 
             onClick={handleCardClick} 
             handleAnswer={handleAnswer} 
             disabled={isHopping || currentCard?.type === "Curiosidade"} 
-            style={(isHopping || currentCard?.type === "Curiosidade") ? { opacity: 0.5, pointerEvents: 'none' } : {}}
+            resetCardState={hopCount} 
+            style={(cardsDisabled || isHopping || currentCard?.type === "Curiosidade") ? { opacity: 0.5, pointerEvents: 'none' } : {}}
+
           />
         </div>
       </div>

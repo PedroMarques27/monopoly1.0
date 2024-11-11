@@ -1,8 +1,8 @@
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 import './Card.css';
 
-const Card = ({ card, onClick, handleAnswer, disabled, style }) => {
+const Card = ({ card, onClick, handleAnswer, disabled, style, resetCardState }) => {
   const [flipped, setFlipped] = useState(false);
   const [answerRevealed, setAnswerRevealed] = useState(false);
 
@@ -12,10 +12,15 @@ const Card = ({ card, onClick, handleAnswer, disabled, style }) => {
     config: { mass: 5, tension: 500, friction: 80 },
   });
 
+  useEffect(() => {
+    setFlipped(false); // Reset flipped state when resetCardState changes
+    setAnswerRevealed(false); // Reset answer revealed state
+  }, [resetCardState]);
+
   const handleCardClick = () => {
-    if (disabled) return; // Prevent click if card is disabled
-    setFlipped(!flipped); // Toggle the flipped state
-    onClick(); // Call the onClick function passed down as a prop
+    if (disabled) return;
+    setFlipped(!flipped);
+    onClick();
   };
 
   return (
