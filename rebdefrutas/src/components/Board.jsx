@@ -20,10 +20,7 @@ const fruitImages = {
   laranja: orange,
 };
 const spiralNumbers = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 
-  16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 
-  27, 28, 29, 30,
-  31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 45      // Left Column
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 45, 46, 47, 48 ,49
 ];
 
 
@@ -42,8 +39,8 @@ const Board = ({ players, currentTurn, currentCard, answerRevealed, cardRevealed
     config: { mass: 5, tension: 500, friction: 80 },
   });
 
-  const rows = 15;
-  const columns = 11;
+  const rows = 11;
+  const columns = 15;
   const borderColors = ["#e9e96a", '#e38d27'];
 
   const board = Array.from({ length: rows }, (_, rowIndex) =>
@@ -82,15 +79,6 @@ const Board = ({ players, currentTurn, currentCard, answerRevealed, cardRevealed
             rowIndex === 0 || rowIndex === rows - 1 || colIndex === 0 || colIndex === columns - 1;
           const borderColor = isBorderCell ? borderColors[(rowIndex + colIndex) % borderColors.length] : null;
           
-          // Determine the spiral number only for border cells
-          const spiralIndex = isBorderCell
-            ? (rowIndex === 0 ? colIndex :            // Top row
-               colIndex === columns - 1 ? rowIndex + 9 : // Right column
-               rowIndex === rows - 1 ? 29 - colIndex :   // Bottom row
-               38 - rowIndex)                             // Left column
-            : null;
-          const cellNumber = isBorderCell ? spiralNumbers[spiralIndex] : null;
-
           let backgroundColor;
           if (isBorderCell) {
             if ((rowIndex === 0 && colIndex === 0) || // top-left corner
@@ -110,18 +98,16 @@ const Board = ({ players, currentTurn, currentCard, answerRevealed, cardRevealed
               className={`cell `}
               style={{ backgroundColor: backgroundColor}}
             >
-               <span className="cell-number">{getIndex(rowIndex, colIndex)}</span> {/* Display cell number */}
+               <span className="cell-number">{getIndex(rowIndex, colIndex)-1} </span> {/* Display cell number */}
               {cell ? <> <img src={fruitImages[cell]} alt={cell} className="player-icon" /></> : null}
             </div>
           ) : (
-            rowIndex > 0 && rowIndex < 9 && colIndex > 0 && colIndex < 9 && (
+            rowIndex > 0 && rowIndex < 10 && colIndex > 0 && colIndex < 14 && (
               <div key={`${rowIndex}-${colIndex}`} className="giant-cell">
                 <div className="card-placements">
                   <div className="game-title">
                     <h1>ReBuLiÇo dE fRuTaS</h1>
                   </div>
-
-                  {/* Card is always visible but only flips if currentCard is defined */}
                   <div className="flipping-card" onClick={handleCardClick}>
                     {/* Front side of the card */}
                     <animated.div

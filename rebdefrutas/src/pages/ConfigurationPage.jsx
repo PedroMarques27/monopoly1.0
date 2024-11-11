@@ -1,28 +1,29 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+// src/ConfigurationPage.js
+import React, { useState } from 'react';
 import AddPlayer from '../components/AddPlayer';
 import PlayerList from '../components/PlayerList';
-import './ConfigurationPage.css';
+import { useNavigate } from 'react-router-dom';
 
-const ConfigurationPage = ({ players, onAddPlayer }) => {
+const ConfigurationPage = () => {
+  const [players, setPlayers] = useState([]);
   const navigate = useNavigate();
+
+  const handleAddPlayer = (newPlayer) => setPlayers([...players, newPlayer]);
 
   const handleStartGame = () => {
     if (players.length > 0) {
-      navigate('/game'); // Move to the game page
+      navigate('/game', { state: { players } });
     } else {
-      alert("Please add at least one player to start the game.");
+      alert("Please add at least one player before starting the game.");
     }
   };
 
   return (
-    <div className="configuration-page">
-      <h2>Game Setup</h2>
-      <AddPlayer onAddPlayer={onAddPlayer} />
+    <div>
+      <h2>Configuration Page</h2>
+      <AddPlayer onAddPlayer={handleAddPlayer} />
       <PlayerList players={players} />
-      <button className="start-game-button" onClick={handleStartGame}>
-        Start Game
-      </button>
+      <button onClick={handleStartGame}>Start Game</button>
     </div>
   );
 };
