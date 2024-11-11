@@ -1,0 +1,59 @@
+.playerList {
+    padding: 20px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border: 2px solid #fafafa; /* Neutral background for a clean look */
+    border-radius: 15px;
+    
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  }
+  
+  h3 {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 24px;
+    color: rgb(253, 207, 0);
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: separate;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    padding: 12px;
+    font-size: 18px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    color: wheat;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #ffcc66; /* Soft yellow for header */
+    color: #333;
+    font-size: 20px;
+  }
+  
+
+  td:first-child {
+    width: 30%; /* First column (avatars) takes up 30% */
+  }
+  
+  tr:hover {
+    
+    border: 2px solid #fafafa; 
+    background-color: #a1a1a1; /* Light hover effect */
+    cursor: pointer;
+  }
+  
+  .avatar {
+    width: 40px; /* Smaller avatar size */
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .avatar:hover {
+    transform: scale(2.1); /* Slightly enlarge avatar on hover */
+  }
+  

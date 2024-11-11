@@ -1,28 +1,138 @@
 /* src/Board.css */
-
 .board {
   display: grid;
-  grid-template-columns: repeat(10, 100px);
-  grid-template-rows: repeat(10, 100px);
-  gap: 5px;
-  max-width: 100%;
-  border: 1px solid #333;
+  grid-template-columns: repeat(15, 155px); /* 10 columns */
+  grid-template-rows: repeat(11, 95px);    /* 10 rows */
+  position: relative;
+  width: 100%; /* Adjust as necessary */
+  height: 100%; /* Adjust as necessary */
+  
 }
 
+/* Existing cell styles */
 .cell {
+  border: 1px solid rgb(255, 255, 255); /* Cell border */
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #ddd;
-  width: 100px;
-  height: 100px;
+  height: 90px; /* Adjust cell height */
+  width: 150px; /* Match the column width */
+  position:relative; 
+}
+.cell-number {
+  position: absolute;
+  top: 4px;
+  left: 4px;
   font-size: 12px;
+  font-weight: bold;
   color: #333;
 }
 
 .emptyCell {
-  width: 50px;
-  height: 50px;
-  background-color: transparent;
-  border: 1px solid transparent transparent;
+  height: 25px; /* Keep empty cells the same height */
+}
+
+
+/* src/Board.css */
+.giant-cell {
+  grid-column: 2 / span 13; /* Start from column 2 and span 8 columns */
+  grid-row: 2 / span 9;    /* Start from row 2 and span 6 rows */
+  background-color: rgba(255, 255, 255, 0); /* Light background for visibility */
+  display: flex;
+  justify-content: center; /* Center items horizontally in the giant cell */
+  align-items: center; /* Center items vertically in the giant cell */
+  position: relative; /* Make it a positioning context for absolute children */
+}
+
+
+.game-title {
+  text-align: center;
+  margin: 0 20px; /* Add margin to space out the title from cards */
+  font-size: 2em; /* Adjust font size as needed */
+  color: rgb(164, 135, 135); /* Text color */
+}
+
+
+.card-placements {
+  position: relative;
+  
+}
+
+.flipping-card {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.front {
+  background-image: url('../assets/carta.png');
+
+  background-size: cover;
+  background-position: center;
+  border: 1px solid #ccc;
+}
+
+.back {
+  border: 1px solid #ccc;
+  
+  background-image: url('../assets/front.png');
+
+  background-size: cover;
+  background-position: center;
+  transform: rotateY(180deg);
+}
+
+.card-content {
+  background-color: beige;
+  padding: 22px;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+}
+.card-content h3 {
+  font-size: 1.2em;
+  color: #333;
+}
+
+.card-content p {
+  font-size: 1em;
+  color: #666;
+}
+
+button {
+  background-color: #008cba;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005f7a;
+}
+
+
+
+
+/* src/Board.css */
+.player-icon {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
 }

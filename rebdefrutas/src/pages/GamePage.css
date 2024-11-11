@@ -1,0 +1,9 @@
+.game-page {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 30%;
+    padding: 20px;
+  }
+  
