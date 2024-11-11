@@ -61,6 +61,7 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
     if (isWhiteCell) {
       setCurrentCard(null); // No card on white cells
       setCardsDisabled(true); // Disable cards on white cells
+      setCanRoll(true);
       return;
     }
 
@@ -75,9 +76,11 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
       setCardRevealed(false);
       setIsQuestionAnswered(false);
       setCardsDisabled(false); // Enable cards on non-white cells
+      setCanRoll(randomCard.type === "Curiosidade");
     } else {
       setCurrentCard(null);
       setCardsDisabled(true); // Disable cards if no card is available
+      setCanRoll(false);
     }
   };
 
@@ -87,6 +90,7 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
      
       if (cardRevealed) {
         setAnswerRevealed(false);
+
       }
     }
   };
@@ -138,13 +142,13 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
   
     await hopThroughPositions();
     setIsHopping(false);
-    setCanRoll(true);
   };
 
 
 
   const handleAnswer = (isCorrect) => {
     setIsQuestionAnswered(true);
+    setCanRoll(true); 
     if (isCorrect) {
       setCurrentTurn(currentTurn);
     } else {

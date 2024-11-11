@@ -46,7 +46,7 @@ const Dice = ({ onRoll, canRoll, setCardRevealed }) => {
   // Revert to static dice image when canRoll changes
   useEffect(() => {
     if (canRoll) {
-      setDiceFace(diceGame);
+      setDiceFace(dice1);
     }
   }, [canRoll]);
 
@@ -55,7 +55,7 @@ const Dice = ({ onRoll, canRoll, setCardRevealed }) => {
       src={diceFace}
       alt="Dice"
       onClick={handleRoll}
-      style={{ cursor: canRoll && !rolling ? 'pointer' : 'default', border: "2px solid red" }}
+      style={{ cursor: canRoll && !rolling ? 'pointer' : 'default' }}
       className="dice"
     />
   );
