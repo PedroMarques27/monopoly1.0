@@ -1,59 +1,60 @@
-.playerList {
-    padding: 20px;
-    width: 100%;
-    margin: 0 auto;
-    text-align: center;
-    border: 2px solid #fafafa; /* Neutral background for a clean look */
-    border-radius: 15px;
-    
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  }
-  
-  h3 {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    font-size: 24px;
-    color: rgb(253, 207, 0);
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: separate;
-    margin-top: 20px;
-  }
-  
-  th, td {
-    padding: 12px;
-    font-size: 18px;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    color: wheat;
-    text-align: center;
-  }
-  
-  th {
-    background-color: #ffcc66; /* Soft yellow for header */
-    color: #333;
-    font-size: 20px;
-  }
-  
+/* src/PlayerList.css */
 
-  td:first-child {
-    width: 30%; /* First column (avatars) takes up 30% */
-  }
-  
-  tr:hover {
-    
-    border: 2px solid #fafafa; 
-    background-color: #a1a1a1; /* Light hover effect */
-    cursor: pointer;
-  }
-  
-  .avatar {
-    width: 40px; /* Smaller avatar size */
-    height: 40px;
-    border-radius: 50%;
-  }
-  
-  .avatar:hover {
-    transform: scale(2.1); /* Slightly enlarge avatar on hover */
-  }
-  
+.playerList {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  color:black ;
+}
+
+.playerList h3 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #4a1c40;
+  margin-bottom: 15px;
+}
+
+/* Table Styling */
+.playerList table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 16px;
+}
+
+.playerList th,
+.playerList td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.playerList th {
+  background-color: #ffe5b4;
+  color: #4a1c40;
+  font-weight: bold;
+}
+
+.playerList tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.playerList tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.playerList tr:hover {
+  background-color: #ffeedb;
+  cursor: pointer;
+}
+
+/* Avatar Styling */
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 20%;
+  border: 2px solid #4a1c40;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

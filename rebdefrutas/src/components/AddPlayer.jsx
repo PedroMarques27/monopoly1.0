@@ -36,6 +36,7 @@ const AddPlayer = ({ onAddPlayer }) => {
 
   return (
     <div className="add-player-container">
+      
       <div className="input-column">
         <input
           type="text"
@@ -57,7 +58,7 @@ const AddPlayer = ({ onAddPlayer }) => {
           ))}
         </select>
 
-        <button onClick={handleAdd} className="add-player-button">Adicionar Jogador</button>
+        <button onClick={handleAdd} className="add-player-button">Adicionar Equipa</button>
       </div>
 
       {/* Avatar preview column */}

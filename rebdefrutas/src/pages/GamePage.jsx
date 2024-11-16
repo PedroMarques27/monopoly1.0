@@ -6,7 +6,6 @@ import './GamePage.css';
 
 const GamePage = () => {
   const { state } = useLocation();
-  const navigate = useNavigate();
   const rows = 11;
   const columns = 15;
   // Helper function to gather all border cells
@@ -35,10 +34,10 @@ const GamePage = () => {
 
   const whiteCells = selectWhiteCells(borderCells);
   return (
-    <div className="game-page">
-      <button onClick={() => navigate('/')}>Back to Configuration</button>
-      <Board players_setup={state.players || []} rows={rows} columns={columns} whiteCells={whiteCells}/>
-    </div>
+  <div className="game-page">
+    <Board players_setup={state.players || []} rows={rows} columns={columns} whiteCells={whiteCells} />
+  </div>
+
   );
 };
 

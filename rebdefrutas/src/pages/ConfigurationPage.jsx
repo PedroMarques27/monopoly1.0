@@ -21,14 +21,16 @@ const ConfigurationPage = () => {
 
   return (
     <div className="configuration-page">
-      <h2 className="configuration-page__header">Configuration Page</h2>
-      <div className="configuration-page__add-player-container">
-        <AddPlayer onAddPlayer={handleAddPlayer} />
-      </div>
-      <div className="configuration-page__player-list-container">
-        <PlayerList players={players} />
-      </div>
-      <button className="configuration-page__button" onClick={handleStartGame}>Start Game</button>
+      <h2 className="configuration-page__header">reBuliÇO dE FruTaS</h2>
+      
+        <div className="configuration-page__add-player-container">
+          <AddPlayer onAddPlayer={handleAddPlayer} />
+        </div>
+        <div className="configuration-page__player-list-container">
+          <PlayerList players={players} />
+        </div>
+      
+      <button className="configuration-page__button" onClick={handleStartGame}>Começar a Jogar</button>
 
       <div className="configuration-page__rules-section">
         <h3 className="configuration-page__rules-header">Instruções</h3>

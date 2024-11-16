@@ -45,22 +45,36 @@ const Card = ({ card, onClick, handleAnswer, disabled, style, resetCardState }) 
           <h3>{card ? card.tema || card.question : '—'}</h3>
           {card && (
             <>
-              <p>{answerRevealed && card.answer}</p>
-              {card.type === "Questão" && (
-                <div>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setAnswerRevealed(prev => !prev);
-                    }}
+            <p className="answer-text">{answerRevealed && card.answer}</p>
+            {card.type === "Questão" && (
+              <div className="button-group">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setAnswerRevealed(prev => !prev);
+                  }}
+                  className="toggle-answer-button"
+                >
+                  {answerRevealed ? 'Esconder Resposta' : 'Mostrar Resposta'}
+                </button>
+                <div className="answer-buttons">
+                  <button 
+                    onClick={() => handleAnswer(true)} 
+                    className="answer-button correct"
                   >
-                    {answerRevealed ? 'Hide Answer' : 'Show Answer'}
+                    Correto
                   </button>
-                  <button onClick={() => handleAnswer(true)}>Correct</button>
-                  <button onClick={() => handleAnswer(false)}>Incorrect</button>
+                  <button 
+                    onClick={() => handleAnswer(false)} 
+                    className="answer-button incorrect"
+                  >
+                    Incorreto
+                  </button>
                 </div>
-              )}
-            </>
+              </div>
+            )}
+          </>
+          
           )}
         </div>
       </animated.div>

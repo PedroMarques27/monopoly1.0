@@ -1,61 +1,76 @@
+/* src/AddPlayer.css */
+
 .add-player-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    width: 100%;
-    border: 2px solid white;
-    border-radius: 25px;
-    padding: 20px ;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  gap: 20px;
+}
 
+/* Input and Select Column */
+.input-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
+}
 
-  }
-  
-  .input-column {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    gap: 20px;
-    width:70%
-  }
-  
-  .player-input,
-  .avatar-select,
-  .add-player-button {
-    font-size: 1.1em; /* Larger font size */
-    padding: 12px;
-    width: 80%;
-    text-align: left;
-  }
-  
+.player-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+}
 
-  .add-player-button {
-    font-weight: bold;
-    cursor: pointer;
-    background-color: #4CAF50; /* A more vibrant color */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-    width: 50%;
-    text-align: center;
-  }
-  
-  .add-player-button:hover {
-    background-color: #45a049; /* Darker shade on hover */
-  }
-  
-  .avatar-preview {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .avatar-image {
-    width: 150px; /* Larger size */
-    height: 150px;
-  }
-  .avatar-image:hover {
-    transform: scale(1.5);
-  }
-  
+.player-input:focus {
+  border-color: #4a1c40;
+  box-shadow: 0 0 5px rgba(74, 28, 64, 0.5);
+}
+
+.avatar-select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #000000;
+  cursor: pointer;
+  outline: none;
+}
+
+.add-player-button {
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #ffb300;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-player-button:hover {
+  background-color: #722057;
+}
+
+/* Avatar Preview Column */
+.avatar-preview {
+  flex: 0 0 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffeedb;
+  border-radius: 20%;
+  padding: 10px;
+  border: 2px solid #4a1c40;
+}
+
+.avatar-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}

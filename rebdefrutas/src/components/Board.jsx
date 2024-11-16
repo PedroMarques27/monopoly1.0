@@ -5,6 +5,7 @@ import Card from './Card';
 import './Board.css';
 import '../assets/carta.png';
 import { decks } from './decks';
+import GameOverPopup from "./GameOverPopup";
 
 import apple from '../assets/fruits/apple.png';
 import kiwi from '../assets/fruits/kiwi.png';
@@ -35,6 +36,8 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
   const [isQuestionAnswered, setIsQuestionAnswered] = useState(false);
   const [canRoll, setCanRoll] = useState(true);
   const [cardsDisabled, setCardsDisabled] = useState(true); // New state variable to control card disabled status
+  const [gameEnded, setGameEnded] = useState(false);
+  const [winnerName, setWinnerName] = useState(null);  // Store the winner's name
 
   useEffect(() => {
     if (!currentCard) {
@@ -62,8 +65,10 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
       setCurrentCard(null); // No card on white cells
       setCardsDisabled(true); // Disable cards on white cells
       setCanRoll(true);
-      setIsBonus(true);
-      handleAnswer(true);
+      setIsBonus(false);
+      let nextTurn = currentTurn + 1;
+      if (currentTurn === players.length - 1) nextTurn = 0;
+      setCurrentTurn(nextTurn);
       return;
     }
    
@@ -117,7 +122,7 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
   };
 
   const hop = async (number) => {
-    if (isHopping) return;
+    if (isHopping || gameEnded) return;
     setHopCount((prevCount) => prevCount + 1);
     setCardRevealed(false);  // Reset card revealed state
     setAnswerRevealed(false);  // Reset answer revealed state
@@ -126,10 +131,14 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
     const newPlayers = [...players];
     const currentPlayer = newPlayers[currentTurn];
   
+    let [row, col] = currentPlayer.position;
+
+    let stepsTaken = 0;
+    let finalIndex = getIndex(row, col);
+    let gameEndedFlag = false;
     const hopThroughPositions = async () => {
-      let [row, col] = currentPlayer.position;
-  
-      for (let steps = 0; steps < number; steps++) {
+
+       while (stepsTaken < number && !gameEndedFlag) {
         if (row === 0 && col < 14) {
           col += 1;
         } else if (col === 14 && row < 10) {
@@ -142,7 +151,20 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
   
         currentPlayer.position = [row, col];
         setPlayers([...newPlayers]);
-        await new Promise((resolve) => setTimeout(resolve, 800));
+        // Get current cell index after the move
+
+        finalIndex = getIndex(row, col);
+        
+       
+        if (row == 0 && col == 0 && stepsTaken > 0) {
+          gameEndedFlag = true;
+          setGameEnded(true);
+          setWinnerName(currentPlayer.name); // Store the winner's name
+          return; // End the game when the player crosses cell 0
+        }
+
+        await new Promise((resolve) => setTimeout(resolve, 10));
+        stepsTaken++;
       }
       handleLanding(row, col);
     };
@@ -180,6 +202,7 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
                 ([whiteRow, whiteCol]) => whiteRow === rowIndex && whiteCol === colIndex
               );
             let backgroundColor;
+            let border = "2px solid #e38a85";
             if (isWhiteCell) {
               backgroundColor = '#e38d27';
             } else if (isBorderCell) {
@@ -193,19 +216,29 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
               }
             }
 
+            const playerAtCell = players.filter(player => player.position[0] === rowIndex && player.position[1] === colIndex);
+
             return isBorderCell || isWhiteCell ? (
               <div
                 key={`${rowIndex}-${colIndex}`}
                 className={`cell`}
-                style={{ backgroundColor: backgroundColor }}
+                style={{ backgroundColor: backgroundColor, border: border }}
               >
-                <span className="cell-number">{getIndex(rowIndex, colIndex) - 1} </span>
-                {cell ? <img src={fruitImages[cell]} alt={cell} className="player-avatar" /> : null}
+                <span className="cell-number">{rowIndex === 0 && colIndex === 0 ? "Inicio" : getIndex(rowIndex, colIndex) - 1} </span>
+                {playerAtCell.map((player, index) => (
+                <img
+                  key={index}
+                  src={fruitImages[player.avatar]} // Use player.avatar to get the image path
+                  alt={player.avatar}
+                  className="player-avatar"
+                  style={{ left: `${index * 5}px`, top: `${index * 5}px` }} // Offset for stacking
+                />
+              ))}
               </div>
             ) : (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                className={`cell`}
+                className={`cell`} style={{ backgroundColor: backgroundColor, border: "none" }}
               >
                 {cell && <img className="player-avatar" src={cell} alt="avatar" />}
               </div>
@@ -226,7 +259,7 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
             style={(cardsDisabled || isHopping || currentCard?.type === "Questão") ? { opacity: 0.5, pointerEvents: 'none' } : {}}
   
           />
-          <Dice canRoll={canRoll} onRoll={hop}/>
+          <Dice canRoll={canRoll} onRoll={hop} currentPlayer={players[currentTurn]}/>
           <Card 
             card={currentCard} 
             onClick={handleCardClick} 
@@ -240,6 +273,7 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
       </div>
 
 
+      {gameEnded && <GameOverPopup winnerName={winnerName} />}
     </div>
   );
 };
