@@ -153,8 +153,8 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
        
         if (row == 0 && col == 0 && stepsTaken > 0) {
           gameEndedFlag = true;
-          setGameEnded(true);
-          setWinnerName(currentPlayer.name); // Store the winner's name
+          await setGameEnded(true);
+          await setWinnerName(currentPlayer.name); // Store the winner's name
           return; // End the game when the player crosses cell 0
         }
 
