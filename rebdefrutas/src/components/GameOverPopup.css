@@ -10,7 +10,7 @@
     align-items: center;
     z-index: 1000; /* Ensure it is on top of everything */
     animation: fadeIn 0.5s ease-in-out; /* Apply the fade-in animation */
-    background: linear-gradient(135deg, #ffe5b4, #ff9c91);
+    background-color: #e38e27;
   }
   
   .popup-content {
