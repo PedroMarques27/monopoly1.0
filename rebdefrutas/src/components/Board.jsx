@@ -85,12 +85,7 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
       setIsQuestionAnswered(false);
       setCardsDisabled(false); // Enable cards on non-white cells
       setCanRoll(randomCard.type === "Curiosidade");
-      if (isCornerCell){
-        let nextTurn = currentTurn + 1;
-        if (currentTurn === players.length - 1) nextTurn = 0;
-        setCurrentTurn(nextTurn);
-        return;
-      } 
+      
     } else {
       setCurrentCard(null);
       setCardsDisabled(true); // Disable cards if no card is available
@@ -163,7 +158,7 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
           return; // End the game when the player crosses cell 0
         }
 
-        await new Promise((resolve) => setTimeout(resolve, 10));
+        await new Promise((resolve) => setTimeout(resolve, 800));
         stepsTaken++;
       }
       handleLanding(row, col);
@@ -202,7 +197,7 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
                 ([whiteRow, whiteCol]) => whiteRow === rowIndex && whiteCol === colIndex
               );
             let backgroundColor;
-            let border = "2px solid #e38a85";
+            let border = "3px solid white";
             if (isWhiteCell) {
               backgroundColor = '#e38d27';
             } else if (isBorderCell) {
@@ -255,6 +250,7 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
             onClick={handleCardClick} 
             handleAnswer={handleAnswer} 
             resetCardState={hopCount} 
+            type={"Curiosidade"}
             disabled={isHopping || currentCard?.type === "Questão"} 
             style={(cardsDisabled || isHopping || currentCard?.type === "Questão") ? { opacity: 0.5, pointerEvents: 'none' } : {}}
   
@@ -266,6 +262,7 @@ const Board = ({ players_setup, rows, columns, whiteCells }) => {
             handleAnswer={handleAnswer} 
             disabled={isHopping || currentCard?.type === "Curiosidade"} 
             resetCardState={hopCount} 
+            type={"Questão"}
             style={(cardsDisabled || isHopping || currentCard?.type === "Curiosidade") ? { opacity: 0.5, pointerEvents: 'none' } : {}}
 
           />

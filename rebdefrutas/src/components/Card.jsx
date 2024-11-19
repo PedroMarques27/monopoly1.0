@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 import './Card.css';
 
-const Card = ({ card, onClick, handleAnswer, disabled, style, resetCardState }) => {
+const Card = ({ card, onClick, handleAnswer, disabled, style, resetCardState, type}) => {
   const [flipped, setFlipped] = useState(false);
   const [answerRevealed, setAnswerRevealed] = useState(false);
 
@@ -23,20 +23,24 @@ const Card = ({ card, onClick, handleAnswer, disabled, style, resetCardState }) 
     onClick();
   };
 
+  const backgroundColor = type === 'Questão' ? '#e9e96a' : '#a8de6e';
   return (
     <div className="flipping-card" onClick={handleCardClick} style={style}>
       <animated.div
         className="card front"
         style={{
+          backgroundColor: backgroundColor,
           opacity: opacity.to(o => 1 - o),
           transform,
         }}
       >
+        <h1 className="card-title">{type}</h1>
         {/* Front content */}
       </animated.div>
       <animated.div
         className="card back"
         style={{
+          backgroundColor: backgroundColor,
           opacity,
           transform: transform.to(t => `${t} rotateY(180deg)`),
         }}

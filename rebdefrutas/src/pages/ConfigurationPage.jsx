@@ -38,7 +38,7 @@ const ConfigurationPage = () => {
           Prontos para começar o rebuliço?
         </p>
         <p className="configuration-page__rules-text">
-          O Jogo “reBuliÇO dE FruTaS” é muito simples e perfeito para as tardes de domingo em família! Para começarem, apenas precisam de se dividir em equipas, atribuindo-lhes um nome original, carregam no “Começar” e ficam prontos para entrarem nesta aventura!
+          O Jogo "reBuliÇO dE FruTaS" é muito simples e perfeito para as tardes de domingo em família! Para começarem, apenas precisam de se dividir em equipas, atribuindo-lhes um nome original, carregam no "Começar" e ficam prontos para entrarem nesta aventura!
         </p>
         <ul className="configuration-page__rules-list">
           <li className="configuration-page__rules-list-item">Começando o jogo, cada equipa lança o dado e quem tiver o número mais alto, começa.</li>

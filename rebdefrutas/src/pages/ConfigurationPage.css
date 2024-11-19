@@ -1,11 +1,12 @@
 /* src/ConfigurationPage.css */
 
+@import url('https://fonts.cdnfonts.com/css/more-sugar');
+
 /* General page styling */
 .configuration-page {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 30px;
   margin: 0 auto;
-  background: linear-gradient(135deg, #ffe5b4, #ff9c91);
+  background-color: #e38e27;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -14,10 +15,9 @@
 .configuration-page__header {
   text-align: center;
   font-size: 38px;
-  color: #4a1c40;
+  
   margin-bottom: 25px;
   font-weight: 700;
-  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
 }
 
 /* Side-by-side layout for AddPlayer and PlayerList */
@@ -48,7 +48,7 @@
   font-size: 18px;
   font-weight: bold;
   color: #fff;
-  background-color: #4a1c40;
+  background-color: #f9b460;;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -58,7 +58,7 @@
 }
 
 .configuration-page__button:hover {
-  background-color: #6d245c;
+  background-color: #ffab44;
   transform: scale(1.05);
 }
 

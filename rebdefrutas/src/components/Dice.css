@@ -1,13 +1,17 @@
 /* src/CenterBlock.css */
+@import url('https://fonts.cdnfonts.com/css/more-sugar');
 
 .center-block {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%; /* Full viewport height */
-    padding: 20px;
+    height: 90%; /* Full viewport height */
+    padding: 10px;
     box-sizing: border-box;
+    box-shadow: 8px 8px 8px rgba(255, 255, 255, 0.2);
+    border:1px solid white;
+    background-color: #e59c43;
   }
   
   .information {
@@ -15,22 +19,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 30px;
-    margin:80px;
+    padding: 10px;
+    margin:120px;
     border-radius: 10px;
-    width: 80%;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background-color: #e38d27;
+    width: 100%;
+    
   }
   
   .information__game-name {
-    color: #4a1c40;
+    color: #ffffff;
         
-    font-size: 28px;
-    color: #4a1c40;
-    font-weight: 700;
-    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    font-size: 38px;
+    font-weight: 400;
+    font-family: 'More Sugar', sans-serif;
   }
   
   .information__back-button {
@@ -51,7 +52,6 @@
   .dice {
     width: 100px;
     height: 100px;
-    margin-top: 20px;
     cursor: pointer;
     transition: transform 0.3s ease;
   }

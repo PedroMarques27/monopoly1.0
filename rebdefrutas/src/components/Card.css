@@ -37,13 +37,28 @@
   background-position: center;
   border: 1px solid #ccc;
   border-radius: 8px;
+  font-weight: 900;
   width: 300px; /* Full width of the container */
   height: 500px; /* Full height of the container */
+  position: 'relative';
 }
-
+.card-title {
+  position: 'absolute';
+  top: '10px';
+  left: '50%'; 
+  transform: 'translateX(-50%)';
+  margin: 0;
+  color:#e59c43;
+  
+  background-color: rgba(245, 245, 220, 0.879);
+  padding: 22px;
+  margin:10%;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
 /* The back side of the card */
 .back {
-  background-image: url('../assets/front.png');
+  background-image: url('../assets/carta.png');
   background-size: cover;
   background-position: center;
   transform: rotateY(180deg); /* Initially flipped */

@@ -55,8 +55,10 @@ const Dice = ({ onRoll, canRoll, currentPlayer }) => {
   useEffect(() => {
     if (canRoll) {
       setDiceFace(dice1);
+      setShowText("Gira o Dado");
     }
   }, [canRoll]);
+
 
   // Trigger animation every time genNumber changes
   useEffect(() => {
@@ -83,13 +85,9 @@ const Dice = ({ onRoll, canRoll, currentPlayer }) => {
   return (
     <div className="center-block">
       <div className="information">
-        <h1 className="information__game-name">RebuLiço de Frutas</h1>
-        <h2>É a vez da Equipa {currentPlayer.name}</h2>
-        <button className="information__back-button" onClick={() => navigate('/')}>
-          Abandonar Jogo
-        </button>
-      </div>
-      <img
+        <h1 className="information__game-name">reBuliÇO dE FruTaS</h1>
+        <h2>Equipa {currentPlayer.name}</h2>
+        <img
         src={diceFace}
         alt="Dice"
         onClick={handleRoll}
@@ -97,8 +95,13 @@ const Dice = ({ onRoll, canRoll, currentPlayer }) => {
         className="dice"
       />
       <h2 className={`generated-number ${triggerAnimation ? 'fade-in-trigger' : 'fade-in-reset'}`}>
-        {genNumber !== 0 ? showText : "Gira o Dado"}
+         {genNumber !== 0 ? showText : "Gira o Dado"}
       </h2>
+        <button className="information__back-button" onClick={() => navigate('/')}>
+          Abandonar Jogo
+        </button>
+      </div>
+     
     </div>
   );
 };
